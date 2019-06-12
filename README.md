@@ -172,8 +172,12 @@ References:
   - See for details: https://docs.ansible.com/ansible/latest/user_guide/become.html#can-t-limit-escalation-to-certain-commands
 
 ## Tools
+- [ansible-lint](https://github.com/ansible/ansible-lint)
 
 ## Possible Ideas for Testing
+- Spin up docker instances for test
+- [molecule](https://github.com/ansible/molecule)
+- [goss](https://github.com/aelsabbahy/goss)
 
 ## Fun with Cows
 From [Ansible FAQ](https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-disable-cowsay):
