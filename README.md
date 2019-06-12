@@ -154,7 +154,10 @@ There are a couple of ways where we can share roles:
 References:
 - https://docs.ansible.com/ansible/latest/reference_appendices/galaxy.html#installing-multiple-roles-from-a-file
 
-## Misc Ways to Improve Playbook
+## Misc Ways/ Ideas to Improve Playbook
+1. Prefer idempotent ansible modules
+2. Split up playbooks that does Configuration Management vs Deployment
+3. Breakup Larger plays into smaller plays (100 line guideline?)
 
 ## Ansible: The Bad Parts
 
