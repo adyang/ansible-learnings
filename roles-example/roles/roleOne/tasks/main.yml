@@ -1,0 +1,32 @@
+---
+- name: print variable defined in defaults to test overwrite
+  debug:
+    var: varOne
+
+- name: print variable defined in vars to test non-overwrite from group_vars
+  debug:
+    var: varTwo
+
+- name: print variable defined in vars to test non-overwrite from play level
+  debug:
+    var: varThree
+
+- name: print variable defined in vars to test non-overwrite from classic role params
+  debug:
+    var: varFour
+
+- name: tasks can be imported directly
+  import_tasks: copy-file.yml
+
+- name: print contents of copied file
+  debug:
+    msg: "Copied file contents: {{ lookup('file', '/tmp/example.txt') }}"
+
+- name: templates can be named directly
+  template:
+    src: example-template.txt.j2
+    dest: /tmp/example-template.txt
+
+- name: print contents of copied file
+  debug:
+    msg: "Templated file contents: {{ lookup('file', '/tmp/example-template.txt') }}"

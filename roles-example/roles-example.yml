@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    varThree: fromPlayLevel
+  roles:
+    - role: roleOne
+      vars:
+        varFour: fromRoleParam
+    - roleTwo
+  tasks:
+    - import_role:
+        name: roleThree
+      vars:
+        varFive: fromRoleImport

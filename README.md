@@ -43,13 +43,71 @@ References
 - https://docs.ansible.com/ansible/latest/modules/fetch_module.html#fetch-module
 
 ## Roles
+Roles are a way to organise/ package a set of tasks to improve reusability and sharing.
 
+### Role Initialisation
+We can initialise a role using:
+```bash
+ansible-galaxy init --init-path=roles role_name
+```
+Alternatively, we can manually create the directories and omit the ones that we do not need.
+
+### What is in a role?
+Most directories will contain a main.yml (except files and templates) and their purpose is as follows:
+- tasks: tasks in the main.yml file will be executed as part of the role, other yml files can be included/ imported from main.yml
+- defaults: default variables will automatically be loaded
+- vars: variables that will automatically be loaded; has higher precedence than defaults, in particular, inventory variables cannot overwrite them
+- files: allows reference to files inside directly without the need to state their path (e.g. in copy/ script module)
+- templates: similar to files but for templates (e.g. in template module)
+- handlers: will make all handlers from main.yml available to role and play
+- meta: meta data such as dependencies; required for sharing via Ansible Galaxy
+
+### How to use them?
+1. Classic way
+    ```yaml
+    - hosts: localhost
+      roles:
+        - roleOne
+        - role: roleOne
+          vars:
+            varFour: fromRoleParam
+    ```
+2. Ansible 2.4 and above
+    ```yaml
+    - hosts: localhost
+      tasks:
+        - import_role:
+            name: roleThree
+          vars:
+            varFive: fromRoleImport
+    ```
+In the `roles-example` directory, run ansible-playbook to see output:
+```bash
+ansible-playbook -i localhost, --connection=local roles-example.yml -v
+```
+
+### Benefits
++ Able to break down plays into smaller units
++ Easier to try out smaller units -> Faster feedback
++ Reusability
++ Possibility of sharing code (See [Sharing of Roles](#sharing-of-roles))
+
+### Disadvantages
+- Fragmented structure, need to refer to several files to understand play
+- No true namespacing -> unwanted variable overwrites (See [Ansible: The Bad Parts](#ansible-the-bad-parts))
+- Awkward sharing system
+
+References
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse.html
+
+## Sharing of Roles
 
 ## Misc Ways to Improve Playbook
 
-## Tools
+## Ansible: The Bad Parts
 
-## Sharing of Roles via Git
+## Tools
 
 ## Possible Ideas for Testing
 

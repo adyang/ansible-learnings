@@ -1,0 +1,4 @@
+---
+- name: print variable defined in defaults to test overwrite
+  debug:
+    var: varFive

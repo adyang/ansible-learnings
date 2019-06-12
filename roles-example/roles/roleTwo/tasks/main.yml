@@ -1,0 +1,4 @@
+---
+- name: print plain message
+  debug:
+    msg: "I am a plain role!"
