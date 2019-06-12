@@ -1,0 +1,4 @@
+---
+- name: print role intro
+  debug:
+    msg: "I am a {{ my_role }}. I am currently version <{{ version }}>. Nice to meet you!"

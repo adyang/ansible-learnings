@@ -102,6 +102,57 @@ References
 - https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse.html
 
 ## Sharing of Roles
+There are a couple of ways where we can share roles:
+1. Dependencies through web service artifact
+    
+    Example:
+    
+    In the `roles-sharing` project,
+    ```bash
+    cd roles-artifact-server
+    ./start-server
+    ```
+    In another console inside `roles-sharing`,
+    ```bash
+    ansible-galaxy install --force -r requirements.yml
+    ```
+    This will install the role to a default shared location. To install it into the roles directory of the current project,
+    ```bash
+    ansible-galaxy install --force -r requirements.yml -p roles
+    ```
+    Run the playbook,
+    ```bash
+    nsible-playbook -i localhost, --connection=local roles-sharing.yml -v
+    ```
+
+    Advantages:
+      + Able to share code with versioning (somewhat)
+    
+    Disadvantages:
+      - Need to build pipeline to publish role artifact to web service
+      - If not installed directly into project roles directory (and checked into vcs), versioning will conflict with other projects
+
+2. Dependencies through git
+    
+    Advantages:
+      + Able to leverage git for versioning (somewhat)
+
+    Disadvantages:
+      - Need to setup a separate git repo for each role
+      - If not installed directly into project roles directory (and checked into vcs), versioning will conflict with other projects
+
+3. Setting roles_path to point to "roles" git repo
+
+    Advantages:
+      + Centralised place to manage roles
+    
+    Disadvantages:
+      - No versioning, latest version checked out used
+      - Need to coordinate checking out of repo when using playbook on CI
+      - Need to ensure roles_path is consistently set
+
+References:
+- https://docs.ansible.com/ansible/latest/reference_appendices/galaxy.html#installing-multiple-roles-from-a-file
 
 ## Misc Ways to Improve Playbook
 
