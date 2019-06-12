@@ -159,7 +159,17 @@ References:
 2. Split up playbooks that does Configuration Management vs Deployment
 3. Breakup Larger plays into smaller plays (100 line guideline?)
 
-## Ansible: The Bad Parts
+## Ansible: The Bad Parts/ Pitfalls
+1. Lack of namespaces which causes complexity in knowing which variable is overwritten
+  - See [Variable Precedence](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable)
+  - Problematic for roles which on first sight seems like it should namespace its own variables just like modules in other programming languages
+  - Possible way to reduce the pain is to prefix variable with the name (or some alias) of the role
+    * E.g. `nginx_dir` instead of just `dir`
+    * Brings its set of issues like redundancy and is more of a workaround
+2. Can't limit priviledge escalation to certain commands
+  - Given that it is common for Security to follow the principle of least priviledge, seems like a huge limitation
+  - We end up using the shell or command module to workaround this limitation, which kind of defeats the purpose of using ansible for idempotent commands
+  - See for details: https://docs.ansible.com/ansible/latest/user_guide/become.html#can-t-limit-escalation-to-certain-commands
 
 ## Tools
 
